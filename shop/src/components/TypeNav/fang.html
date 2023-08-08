@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="../../../node_modules/lodash/lodash.js"></script>
+<!-- 3)演示卡顿现象
+正常:事件触发非常频繁，而且每一次的触发，回调函数都要去执行(如果时间很短，而回调函数内部有计算，那么很可能出现浏览器卡顿)
+4节流:在规定的间隔时间范围内不会重复触发回调，只有大于这个时间间隔才会触发回调，把频繁触发变为少量触发
+防抖:前面的所有的触发都被取消，最后一次执行在规定的时间之后才会触发，也就是说如果连续快速的触发 只会执行一次 -->
+
+<body>
+    <!-- 防抖 只触发最后一次-->
+    <p>请输入:</p>
+    <input type="text" placeholder="点击输入">
+    <hr>
+    <!-- 节流  规定一定时间之后才能进行下一次函数触发-->
+    <p id="p2">0</p>
+    <button id="btn">点击+1</button>
+
+</body>
+<script>
+    const input = document.querySelector('input')
+    input.oninput = _.debounce(function() {
+        console.log('发送Ajax');
+    }, 1000)
+    let count = 0
+    const p2 = document.querySelector('#p2')
+    btn.onclick = _.throttle(function() {
+        count++
+        p2.innerHTML = count
+    }, 1000)
+</script>
+
+</html>
